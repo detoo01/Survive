@@ -5,7 +5,7 @@
 # Date Created: 8/4/2024
 # Last Updated: 8/4/2024
 # -----------------------------------------------------------------------------------------
-
+#            self.player.set_position(50,50) (for later)
 # This is the package that will run the game
 import pygame
 
@@ -31,15 +31,24 @@ class Survive:
         # This controls the game frame rate
         self.clock = pygame.time.Clock()
 
+        # Sets the title in the top left corner of the screen
         pygame.display.set_caption("Survive")
 
+        # Sets the screen height and width from the settings class
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
 
+        # Sets the background color to black
         self.bg_color = (0, 0, 0)
 
+        # Fills the screen with background color
         self.screen.fill(self.bg_color)
 
         self.player = Player(self)
+
+        self.player_x = 0
+        self.player_y = 0
+
+        self.moving_right = False
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -48,13 +57,46 @@ class Survive:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self.moving_right = True
+                self._key_down_events(event)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.player.moving_right = False
+                if event.key == pygame.K_UP:
+                    self.player.moving_up = False
+                if event.key == pygame.K_LEFT:
+                    self.player.moving_left = False
+                if event.key == pygame.K_DOWN:
+                    self.player.moving_down = False
+
+
+    def _key_down_events(self, event):
+        if event.key == pygame.K_LEFT:
+            self.player.moving_left = True
+        if event.key == pygame.K_RIGHT:
+            self.player.moving_right = True
+        if event.key == pygame.K_DOWN:
+            self.player.moving_down = True
+        if event.key == pygame.K_UP:
+            self.player.moving_up = True
 
     def run_game(self):
         """Runs the game"""
         while True:
             pygame.display.update()
             self._check_events()
-            self.player.blitme()
+            self.update_screen()
+
+    def update_screen(self):
+        """Updates images on the screen, and flip to the new screen."""
+        # Redraw the screen during each pass through the loop.
+        self.screen.fill(self.bg_color)
+
+        self.player.update()
+
+        # starts the blitme function in player.py
+        self.player.blitme()
 
 
 def main():
