@@ -35,20 +35,27 @@ class Player:
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
-        self.square = pygame.transform.scale(self.image, (50, 50))
+        self.square = pygame.transform.scale(self.image, (35, 35))
         self.rect = self.image.get_rect()
 
-        moving_right = False
-        moving_left = False
-        moving_up = False
-        moving_down = False
+        self.moving_right = False
+        self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
 
     def blitme(self):
         """Draw the player at the screen on its current location."""
         self.screen.blit(self.square, self.rect)
 
-    def set_position(self, x_position, y_position):
-
-        self.rect.x = x_position
-        self.rect.y = y_position
-
+    def update(self):
+        """Updates x and y coordinates if moving."""
+        if self.moving_right:
+            self.x += 1
+        if self.moving_left:
+            self.x -= 1
+        if self.moving_up:
+            self.y -= 1
+        if self.moving_down:
+            self.y += 1
+        self.rect.x = self.x
+        self.rect.y = self.y

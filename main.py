@@ -61,24 +61,33 @@ class Survive:
                 self.moving_right = True
                 self._key_down_events(event)
             elif event.type == pygame.KEYUP:
-                self.moving_right = False
+                if event.key == pygame.K_RIGHT:
+                    self.player.moving_right = False
+                if event.key == pygame.K_UP:
+                    self.player.moving_up = False
+                if event.key == pygame.K_LEFT:
+                    self.player.moving_left = False
+                if event.key == pygame.K_DOWN:
+                    self.player.moving_down = False
 
 
     def _key_down_events(self, event):
         if event.key == pygame.K_LEFT:
-            self.player_x -= 1
-        if event.key == pygame.K_UP:
-            self.player_y -= 1
-        if event.key == pygame.K_RIGHT:
-            self.player_x += 1
+            self.player.moving_left = True
+        if event.key == pygame.K_RIGHT and self.player_x < 1366:
+            self.player.moving_right = True
         if event.key == pygame.K_DOWN:
-            self.player_y += 1
+            self.player.moving_down = True
+        if event.key == pygame.K_UP:
+            self.player.moving_up = True
 
     def run_game(self):
         """Runs the game"""
         while True:
             pygame.display.update()
+            # Checks keyboard interactions
             self._check_events()
+            # Updates screen
             self.update_screen()
 
     def update_screen(self):
@@ -86,7 +95,7 @@ class Survive:
         # Redraw the screen during each pass through the loop.
         self.screen.fill(self.bg_color)
 
-        self.player.set_position(self.player_x, self.player_y)
+        self.player.update()
 
         # starts the blitme function in player.py
         self.player.blitme()
@@ -96,7 +105,6 @@ def main():
     # Make a game instance,and run the game
     ai = Survive()
     ai.run_game()
-
 
 if __name__ == '__main__':
     main()
