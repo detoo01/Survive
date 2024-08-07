@@ -18,13 +18,15 @@ import sys
 # This is the package that manages game settings
 from settings import Settings
 
+import bullet
+from bullet import Bullet
+
 
 class Survive:
     """Overall class to manage game assets and behavior"""
 
     def __init__(self):
         self.settings = Settings()
-
         """Initialize the game and create game resources."""
         pygame.init()
 
@@ -45,20 +47,22 @@ class Survive:
 
         self.player = Player(self)
 
+        self.Bullet = Bullet(self)
+        self.bullets = pygame.sprite.Group()
+
         self.player_x = 0
         self.player_y = 0
 
         self.moving_right = False
 
     def _check_events(self):
-        """Respond to keypresses and mouse events."""
+        """Respond to key presses and mouse events."""
 
         # Watch for keyboard and mouse events.
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                self.moving_right = True
                 self._key_down_events(event)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
@@ -69,7 +73,6 @@ class Survive:
                     self.player.moving_left = False
                 if event.key == pygame.K_DOWN:
                     self.player.moving_down = False
-
 
     def _key_down_events(self, event):
         if event.key == pygame.K_LEFT:
@@ -85,7 +88,9 @@ class Survive:
         """Runs the game"""
         while True:
             pygame.display.update()
+            # Checks keyboard interactions
             self._check_events()
+            # Updates screen
             self.update_screen()
 
     def update_screen(self):
@@ -95,8 +100,16 @@ class Survive:
 
         self.player.update()
 
+        # starts the blitme function in bullet.py
+        self.Bullet.blitme()
+        self.Bullet.start_obstacle()
+
         # starts the blitme function in player.py
         self.player.blitme()
+
+        # Gets position for the player
+        self.player_x = self.player.get_position_x()
+        self.player_y = self.player.get_position_y()
 
 
 def main():

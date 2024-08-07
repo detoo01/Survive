@@ -12,3 +12,14 @@ class Settings:
         self.screen_width = 1366
         self.screen_height = 700
         self.bg_color = (255, 255, 255)
+
+        # Bullet settings:
+        self.bullet_width = 10.0
+        self.bullet_height = 25.0
+        self.bullet_color = (255, 0, 0)
+
+
+        # DEFAULT SETTINGS
+        #        self.bullet_width = 10.0
+        #self.bullet_height = 25.0
+        # DEFAULT SETTINGS ^^^^^

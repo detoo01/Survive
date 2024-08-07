@@ -5,8 +5,7 @@
 # Date Created: 8/4/2024
 # Last Updated: 8/4/2024
 # ------------------------------------------------------------------------
-#self.rect.x = x_position
- #       self.rect.y = y_position
+
 import pygame
 
 from settings import Settings
@@ -36,7 +35,7 @@ class Player:
         self.x = float(self.rect.x)
         self.y = float(self.rect.y)
 
-        self.square = pygame.transform.scale(self.image, (50, 50))
+        self.square = pygame.transform.scale(self.image, (35, 35))
         self.rect = self.image.get_rect()
 
         self.moving_right = False
@@ -48,14 +47,24 @@ class Player:
         """Draw the player at the screen on its current location."""
         self.screen.blit(self.square, self.rect)
 
+    def get_position_x(self):
+        """ Get the x coordinate"""
+        return self.x
+
+    def get_position_y(self):
+        """Get the y coordinate"""
+        return self.y
+
     def update(self):
-        if self.moving_right:
+        """Updates x and y coordinates if moving."""
+        if self.moving_right and self.x < 1329:
             self.x += 1
-        if self.moving_left:
+        if self.moving_left and self.x > 0:
             self.x -= 1
-        if self.moving_up:
+        if self.moving_up and self.y > 0:
+            print(self.x)
             self.y -= 1
-        if self.moving_down:
+        if self.moving_down and self.y < 655:
             self.y += 1
         self.rect.x = self.x
         self.rect.y = self.y
