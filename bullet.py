@@ -4,17 +4,18 @@
 # Last Updated: 8/4/2024
 # Description: Manages bullets in Survive game
 # -----------------------------------------------------------------------
+
 from random import random, randint
 import time
 
 import pygame
 from pygame.sprite import Sprite
 
-
 class Bullet:
     """A class to manage bullets in bullet.py"""
 
     def __init__(self, ai_game):
+
         #self.main = main.Survive()
         """Sets up bullets"""
         self.screen = ai_game.screen

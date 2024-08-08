@@ -31,6 +31,7 @@ class Survive:
     def __init__(self):
 
         self.settings = Settings()
+
         """Initialize the game and create game resources."""
         pygame.init()
 
@@ -148,7 +149,6 @@ def main():
     # Make a game instance,and run the game
     ai = Survive()
     ai.run_game()
-
 
 if __name__ == '__main__':
     main()
