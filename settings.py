@@ -18,6 +18,9 @@ class Settings:
         self.bullet_height = 25.0
         self.bullet_color = (255, 0, 0)
 
+        # Time between obstacles:
+        self.time = 5
+
 
         # DEFAULT SETTINGS
         #        self.bullet_width = 10.0

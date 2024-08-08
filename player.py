@@ -62,7 +62,6 @@ class Player:
         if self.moving_left and self.x > 0:
             self.x -= 1
         if self.moving_up and self.y > 0:
-            print(self.x)
             self.y -= 1
         if self.moving_down and self.y < 655:
             self.y += 1
